@@ -1,0 +1,116 @@
+.App {
+  text-align: center;
+  width: 100%;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.Formdiv span{
+  color: red;
+  font-size: 13px;
+}
+input{
+  margin: 15px;
+}
+input span{
+  margin: 10px;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.submit{
+  margin: 50px auto;
+}
+.App-link {
+  color: #61dafb;
+}
+.Tbl{
+  width: 75%;
+  margin: 20px auto;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.button-6 {
+  background-color: #ffffff00;
+  border: 1px solid rgba(255, 255, 255, 0.495);
+  border-radius: .25rem;
+  
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0 auto;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: rgba(255, 255, 255, 0.2) 0 4px 12px;
+  color: rgb(255, 255, 255);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+.Nav li{
+  display: inline-block;
+  text-decoration: none;
+  padding: 5px;
+  margin: 10px 30px;
+  color: #282c34;
+  background-color: #ffffff;
+  transition: all 1s;
+  border-radius: 6px;
+}
+.nav li:hover{
+  color: rgba(0, 0, 0, 5);
+  box-shadow: inset 1px 1px black;
+}
+.Nav{
+  background-color: rgb(223, 218, 255);
+  height: 50px;
+  align-items: center;
+  margin-top: 0;
+  vertical-align: middle;
+}
