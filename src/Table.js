@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { DeleteAction, EditAction } from './action';
+import Form from './form';
 // import { useSelector } from 'react-redux';
 import SubmitReducer from './reducer/submit';
 function Table(props) {
-    console.log("props",props);
+    const navigate=useNavigate();
     const [userDatas,setuserDatas]=useState();
-    const mapStateToProps=(state)=>{
-        setuserDatas(state)
-        return state
-    }
+
     
-    useEffect(mapStateToProps,[])
+    useEffect(()=>{
+        setuserDatas(props.userData.users)
+    })
     const HandleDelete=(i)=>{
-        const deletedata = userDatas.filter((l,index)=>index!=i)
-        // console.log("de",deletedata)
-        // dispatch(DeleteAction(deletedata));
+        props.deletes(userDatas,i)
     }
     const HandleEdit=(i)=>{
-        const EditData=userDatas.find((l,index)=>index==i)
-        // console.log("edit",EditData)
-        // setuser(EditData)
-        // seteditid(i)
-        // setEditUp(true)
-        
+        props.edit(userDatas,i)
+        navigate('/')
     }
     return (
-    <div className="App-header" >
+        <div className="App-header" >
+        {console.log("users",props.userData.user)}
       <div className='App'>
         <table border={1} className='Tbl'>
                 
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Phone</th>
                         <th>E-mail</th>
+                        <th> Phone</th>
                         <th>Date</th>
                         <th>Gender</th>
                         <th>Hobby</th>
@@ -72,6 +69,11 @@ const mapStateToProps = (state) => {
     console.log("state",state);
    return { userData: state.SubmitReducer}
 }
+const mapDispatchToProps=(dispatch)=>{
+    return{
+        deletes: (user,i)=> dispatch(DeleteAction(user,i)),
+        edit: (users,i)=> dispatch(EditAction(users,i))
+    }
+}
 
-
-export default connect()(Table)
+export default connect(mapStateToProps,mapDispatchToProps)(Table)

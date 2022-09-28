@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { DeleteAction, SubmitAction, UpdateAction } from './action';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-export default function Form() {
+import { AfterEdit, DeleteAction, SubmitAction, UpdateAction } from './action';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Connect } from 'react-redux';
+
+function Form(props) {
     const [NameE,setNameE]=useState();
     const [EmailE,setEmailE]=useState();
     const [NumberE,setNumberE]=useState();
@@ -12,11 +14,19 @@ export default function Form() {
     const[user,setuser]=useState({Hobby:[]});
     const[Editid,seteditid]=useState()
     const dispatch= useDispatch();
-    // const [userDatas,setuserDatas]=useState();
+    const [userDatas,setuserDatas]=useState();
     const [EditUp,setEditUp]=useState(false)
-    
+    const location = useLocation();
+    const navigate = useNavigate();
+    const abc = useSelector((state)=>state.SubmitReducer);
 
-    
+    useEffect(()=>{
+        if(abc.user){
+            setuser(abc.user);
+            console.log("id",abc.index)
+            seteditid(abc.index)
+        }
+    },[abc])
 
     const handleChange= (event)=>{
         const name = event.target.name;
@@ -40,46 +50,22 @@ export default function Form() {
         }
     }
 
-    
-    // const HandleDelete=(i)=>{
-    //     const deletedata = userDatas.filter((l,index)=>index!=i)
-    //     console.log("de",deletedata)
-    //     dispatch(DeleteAction(deletedata));
-    // }
-
-    // const HandleEdit=(i)=>{
-    //     const EditData=userDatas.find((l,index)=>index==i)
-    //     console.log("edit",EditData)
-    //     setuser(EditData)
-    //     seteditid(i)
-    //     setEditUp(true)
-        
-    // }
-    
     const handleSubmit=()=>{
-        // if(Validation()){
-            // if(EditUp){
-            //     console.log("object",user)
-            //     console.log("all",userDatas)
-            //     console.log("updatesubmitid",Editid)
-            //     // const dd = userDatas.splice(Editid,1,user)
-            //     // console.log("dd",dd)
-            //     // setdd(dd);S
-            //     dispatch(UpdateAction(Editid,user,userDatas))
-            //     setEditUp(false)
-            // }else{
+        if(Validation()){
+            if(abc.user){
+                props.update(user,abc.users,Editid)
+            }else{
                 dispatch(SubmitAction(user));
-            // }
+            }
             setuser({Hobby:[]})
-            // setuserDatas(abc)
-        // }
+            navigate("/table")
+        }
     }   
     
     function Validation(){
         const namev = /^[a-zA-Z\s]+$/;
         const emailv = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
         const numberv = /^[1-9]\d{9}$/;
-        console.log("name");
         let NameER = true;
         let emailEr = true;
         let numberEr = true;
@@ -177,10 +163,18 @@ export default function Form() {
             <label className='HB'>Favorite Colour : </label> 
             <span style={{padding:"0",marginLeft:"15px"}}>{ColorE || ''}</span><br/>
             <input type="color" id="color" className='i-color' name="color" value={user.color || ''} onChange={handleChange} /><br/>
-            <div className='sub'><NavLink to="/table" onClick={handleSubmit}><input type="button" value="Submit"  className='button-6'  to="/" /></NavLink></div>
+            <div className='sub'><NavLink onClick={handleSubmit}><input type="button" value="Submit"  className='button-6'  to="/" /></NavLink></div>
         </form>
             </div>
         
         </div>
     )
 }
+ 
+const mapDispatchToProps=(dispatch)=>{
+    console.log("dispatch1234",dispatch)
+    return{
+        update: (nuser,all,id)=> dispatch(UpdateAction(nuser,all,id))
+    }
+}
+export default connect(null,mapDispatchToProps)(Form)
